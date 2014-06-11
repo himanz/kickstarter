@@ -1,0 +1,125 @@
+<%= link_to "Back to Projects", projects_url %><br/>
+
+
+<div class="small-5 small-centered columns">
+	<h1><%= @project.title %> </h1>
+</div>
+
+<div class = "row">
+	<div class="large-9 columns">
+		<h2> <%= @project.description %> </h2> 
+		<br />
+		<h1>$<%= @project.goal %></h1>Goal <br />
+		
+		
+		<h1>
+			<div id="pledgeTotal">
+			$<%= @project.current_funding %>
+			</div>
+		</h1>
+			Pledged
+		<!-- Update amount of pledges by ajax -->
+		
+		<h1>
+			<div class="pledgesnumber">
+				<%= @project.number_of_pledges %> 
+			</div>
+		</h1>
+
+		Pledges
+		<br/>
+
+<!-- if funded 100% show progress in green -->
+		<br />
+		<% if @project.percent_funded == 100 %>
+			<div class="progress success">
+				<span class="meter" style="width:<%=@project.percent_funded%>%">Project Funded!</span>
+			</div>
+		<% else %>
+			<div class="progress">
+				<span class="meter" style="width:<%=@project.percent_funded%>%"></span>
+			</div>
+		<% end %>
+
+			Pledge status
+
+
+		<div id= "timeRemaining">
+			<% time_left = (@project.end_date - @project.start_date)/(86400) %>
+			<H1>
+			 <%= time_left.to_i %>
+			 </h1>
+			 Days left
+		</div>
+	</div>
+
+	<br />
+	<br /><br />
+
+
+	<div class ="small-3 columns">
+		<div class = "pledge">
+		<% @project.breakpoints.each do |breakpoint| %>
+			
+				<a>
+				<ul class="pricing-table">
+					<li class="title"><%= breakpoint.pledge_title %></li>
+					<li class="price"><%= breakpoint.pledge %></li>
+					<li class="description"><%= breakpoint.info%></li>
+
+						<!-- <div class= "break"> -->
+					<%= form_for [@project, @pledge], :remote => true, :html => {:class => "pledgeSubmit"} do |f| %>
+					
+					<%= f.submit "Pledge", class: "alert-box-pledge" %>
+					<%= f.hidden_field :project_id, :value => @project.id %>
+					<%= f.hidden_field :breakpoint_id,  :value => breakpoint.id %>
+					<% end %>
+					
+				</ul>
+				</a>
+			<%end%>
+		</div>
+	</div>
+
+	
+	<% if current_user %>
+	
+	
+	<div id="review-list">
+		<%= render :partial => "/projects/comments" %>
+	</div>
+
+
+	<h4>New Comment</h4>
+
+		<%= form_for [@project, @comment], :remote => true do |f| %>
+      <div class="comment-form-errors">
+        <%= render :partial => "/projects/comment_form_errors" %>
+      </div>
+
+			<div class="field">
+				<%= f.label :comment_text %><br/>
+				<%= f.text_area :comment_text %>
+			</div>
+
+			<div class= "action" id="b1s">
+			<%= f.submit "Submit", class: "alert-box success radius" %>
+			</div>
+		</div>
+
+		<% end %>
+
+				</div>
+
+	<% else %>
+	<p>Please <%= link_to "log in", new_session_path %> to add a comment.</p>
+	<% end %>
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,58 @@
+<%= form_for @project do |f| %>
+  <div class="form-errors">
+    <%= render :partial => "/projects/projects_form_errors" %>
+  </div>
+  <div class="row">
+    <div class="small-9 columns">
+      <%= f.label :title %><br>
+      <%= f.text_field :title %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="small-9 columns">
+      <div class="projectinfo">
+        <%= f.label :description %><br>
+        <%= f.text_area :description %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="small-6 columns">
+      <%= f.label :goal %><br>
+      <%= f.number_field :goal %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="small-3 columns">
+      <%= f.label :category %><br>
+      <%= f.select :category, ["Art", "Comics", "Design", "Film & Video", "Games", "Music", "Photography", "Technology"], :prompt => "Select One" %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="large-3 columns">
+      <%= f.label :start_date %><br>
+      <%= f.date_field :start_date %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="large-3 columns">
+      <%= f.label :end_date %><br>
+      <%= f.date_field :end_date %>
+    </div>
+  </div>
+  <h3>Breakpoints</h3>
+  <div id="breakpoints">
+    <%= f.fields_for :breakpoints do |breakpoint| %>
+      
+        <%= render :partial => "/projects/breakpoint_form_errors" %>
+      
+
+      <%= render 'breakpoint_fields', :f => breakpoint %>
+    <% end %>
+    <div class="links">
+      <%= link_to_add_association 'add breakpoint', f, :breakpoints %>
+    </div>
+  <div class="action"><%= f.submit class: "button medium left" %></div>
+  </div>
+<% end %>
+

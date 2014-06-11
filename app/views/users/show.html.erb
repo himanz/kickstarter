@@ -1,0 +1,41 @@
+<%= @user.email %></br>
+
+<!-- projects backed -->
+<% @user.projects.each do |project| %>
+  <p> Project </p>
+  <%= project.title %><br/>
+  <p> Pledges </p>
+  <% project.breakpoints.each do |breakpoint| %>
+    <%= breakpoint.pledge %>
+  <% end %>
+<% end %>
+
+<!-- total amount of money backed in pledges -->
+<% pledge_total = 0 %>
+<p>Total amount of pledges</p>
+<% @user.pledges.each do |target| %>
+  <% pledge_total += target.breakpoint.pledge %>
+<% end %>
+<%= pledge_total %>
+
+<!-- fix margin bottom -->
+<h3>Projects Owned</h3>
+<% @projects_owned.each do |project| %>
+  <%= link_to project.title, project_path(project) %>
+  <% if Pledge.first == nil %>
+      <%= 0 %>  
+    <% else %>
+      <% if project.pledge_total == nil%>
+        <% total = 0 %>
+        <% pledge_total = 0 %>
+      <% else %>
+        <% total = project.pledge_total %>
+      <% end %>
+      <% project.breakpoints.each do |breakpoint| %>
+        <% total += breakpoint.pledge * breakpoint.pledges.count %>
+        <% pledge_total += breakpoint.pledges.count %>
+      <% end %>
+      <p>Total Number of Pledges: <%= pledge_total %></p>
+      <p>Total Amount Pledged: <%= total %></p>
+  <% end %>
+<% end %>

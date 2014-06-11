@@ -1,0 +1,51 @@
+<center><h1> Top Projects </h1></center>
+
+<!-- <ul class="example-orbit-content" data-orbit>
+  <li data-orbit-slide="headline-1">
+    <div>
+      <h2>
+        
+
+
+      </h2>
+      <h3>Subheadline</h3>
+    </div>
+  </li>
+  <li data-orbit-slide="headline-2">
+    <div>
+      <h2>Headline 2</h2>
+      <h3>Subheadline</h3>
+    </div>
+  </li>
+  <li data-orbit-slide="headline-3">
+    <div>
+      <h2>Headline 3</h2>
+      <h3>Subheadline</h3>
+    </div>
+  </li>
+</ul> -->
+
+
+
+<%= link_to "Post a new Project", new_project_path %>
+
+</br>
+</br>
+<%= form_tag projects_path, method: :get, authentication: false, id: 'category-select' do %>
+  <div class="small-3 columns left">
+    <%= select_tag :search, options_for_select([["Art","Art"], ["Comics", "Comics"], ["Design", "Design"], ["Film & Video", "Film & Video"], ["Games", "Games"], ["Music", "Music"], ["Photography", "Photography"], ["Technology", "Technology"]], params[:search]) %>
+  </div>
+
+  <div class="action">
+      <%= submit_tag "Search", class: "button tiny left inline" %>
+  </div>
+
+<% end %>
+
+  <div id="projects">
+    <%= render @projects %>
+  </div>
+
+<!-- outputs several pagination links such as « First ‹ Prev ... 2 3 4 5 6 7 8 9 10 ... Next › Last » -->
+  <%= paginate @projects %>
+</div>

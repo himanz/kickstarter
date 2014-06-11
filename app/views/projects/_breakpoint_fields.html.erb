@@ -1,0 +1,23 @@
+<div class="nested-fields">
+  <div class="row">
+    <div class="small-6 columns">
+      <%= f.label :pledge_title %><br>
+      <%= f.text_field :pledge_title%>
+    </div>
+  </div>
+  <div class="row">
+    <div class="small-6 columns">
+      <div class="pledgeinfo">
+        <%= f.label :info %><br>
+        <%= f.text_area :info %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="small-6 columns">
+      <%= f.label :pledge %><br>
+      <%= f.number_field :pledge %>
+    </div>
+  </div>
+  <%= link_to_remove_association "remove breakpoint", f %>
+</div>
